@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlowID — вход для ваших приложений</title>
+<meta name="description" content="FlowID выдаёт вашим приложениям вход по почте, паролю и VK ID и отдаёт токены по OAuth 2.1 и OpenID Connect.">
+<link rel="icon" href="/assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/flowid.css">
+<script>try{var t=localStorage.getItem('flowid-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <a class="mark" href="/">
+      <svg class="mark__glyph" viewBox="15 18 131 147" fill="currentColor" aria-hidden="true"><path d="M139 23C142 26 140 34 136 40C131 48 123 53 113 55H59C51 56 46 60 44 66C43 71 44 78 46 86L22 103C20 103 19 102 19 99V67C19 53 25 42 34 34C42 26 50 23 59 22H136C137 22 138 22 139 23Z"/><path d="M119 76C122 79 120 86 116 94C112 101 106 105 97 109L67 116C56 119 49 125 47 134C45 144 40 153 33 157C27 161 21 160 19 157V120C19 111 23 105 31 100C41 94 57 87 74 82L114 74C116 74 118 75 119 76Z"/></svg>
+      FlowID
+    </a>
+    <nav>
+      <a href="/docs" class="hide-sm">Документация</a>
+      <a href="#endpoints" class="hide-sm">Эндпоинты</a>
+      <button class="theme-toggle" type="button" aria-label="Переключить тему">
+        <svg class="sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 2v2m0 12v2M2 10h2m12 0h2M4.6 4.6l1.4 1.4m8 8 1.4 1.4m0-10.8-1.4 1.4m-8 8-1.4 1.4"/></svg>
+        <svg class="moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.4A6.6 6.6 0 0 1 8.6 4a6.6 6.6 0 1 0 7.4 7.4Z"/></svg>
+      </button>
+      <a class="btn btn--ghost" href="/login" data-auth-hide>Войти</a>
+      <a class="btn hide-xs" href="/register" data-auth-hide>Создать аккаунт</a>
+      <a class="btn" href="/account" data-auth-show hidden>Мой аккаунт</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="shell">
+      <div class="hero__top enter">
+        <h1>Вход, который вы не пишете заново</h1>
+        <div class="hero__side">
+          <p>FlowID берёт на себя регистрацию, пароли, сессии и вход через VK&nbsp;ID, а вашему приложению отдаёт токены по стандартам OAuth&nbsp;2.1 и OpenID Connect.</p>
+          <div class="hero__actions">
+            <a class="btn btn--lg" href="/register">Создать аккаунт</a>
+            <a class="btn btn--lg btn--ghost" href="/docs">Подключить приложение</a>
+          </div>
+        </div>
+      </div>
+
+      <ol class="flow" aria-label="Как проходит вход">
+        <li class="flow__stop">
+          <div class="flow__screen" aria-hidden="true">
+            <div class="flow__url">notes.example.ru</div>
+            <div class="mock mock--app">
+              <div class="mock__appmark">Заметки</div>
+              <p class="mock__text">Войдите, чтобы продолжить</p>
+              <span class="mock__btn"><svg viewBox="15 18 131 147" fill="currentColor" aria-hidden="true"><path d="M139 23C142 26 140 34 136 40C131 48 123 53 113 55H59C51 56 46 60 44 66C43 71 44 78 46 86L22 103C20 103 19 102 19 99V67C19 53 25 42 34 34C42 26 50 23 59 22H136C137 22 138 22 139 23Z"/><path d="M119 76C122 79 120 86 116 94C112 101 106 105 97 109L67 116C56 119 49 125 47 134C45 144 40 153 33 157C27 161 21 160 19 157V120C19 111 23 105 31 100C41 94 57 87 74 82L114 74C116 74 118 75 119 76Z"/></svg>Войти через FlowID</span>
+            </div>
+          </div>
+          <div class="flow__caption">
+            <span class="flow__num">1</span>
+            <div>
+              <div class="flow__title">Приложение просит вход</div>
+              <code>GET /oauth/authorize</code> с PKCE
+            </div>
+          </div>
+        </li>
+        <li class="flow__stop">
+          <div class="flow__screen" aria-hidden="true">
+            <div class="flow__url flow__url--id"><svg viewBox="15 18 131 147" fill="currentColor" aria-hidden="true"><path d="M139 23C142 26 140 34 136 40C131 48 123 53 113 55H59C51 56 46 60 44 66C43 71 44 78 46 86L22 103C20 103 19 102 19 99V67C19 53 25 42 34 34C42 26 50 23 59 22H136C137 22 138 22 139 23Z"/><path d="M119 76C122 79 120 86 116 94C112 101 106 105 97 109L67 116C56 119 49 125 47 134C45 144 40 153 33 157C27 161 21 160 19 157V120C19 111 23 105 31 100C41 94 57 87 74 82L114 74C116 74 118 75 119 76Z"/></svg>flowid.local/oauth/authorize</div>
+            <div class="mock mock--consent">
+              <p class="mock__title">Заметки просят доступ</p>
+              <span class="mock__scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg>Имя и аватар</span>
+              <span class="mock__scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg>Почта anna@example.ru</span>
+              <span class="mock__btn mock__btn--wide">Разрешить</span>
+            </div>
+          </div>
+          <div class="flow__caption">
+            <span class="flow__num">2</span>
+            <div>
+              <div class="flow__title">Человек входит и выбирает, чем поделиться</div>
+              почта и пароль или VK ID
+            </div>
+          </div>
+        </li>
+        <li class="flow__stop">
+          <div class="flow__screen" aria-hidden="true">
+            <div class="flow__url">notes.example.ru/callback</div>
+            <pre class="mock mock--token"><span class="c">// id_token, RS256</span>
+{ <span class="k">"sub"</span>: <span class="s">"u_8f3a2c"</span>,
+  <span class="k">"name"</span>: <span class="s">"Анна"</span>,
+  <span class="k">"email"</span>: <span class="s">"anna@example.ru"</span>,
+  <span class="k">"email_verified"</span>: true }</pre>
+          </div>
+          <div class="flow__caption">
+            <span class="flow__num">3</span>
+            <div>
+              <div class="flow__title">Приложение получает токены</div>
+              <code>POST /oauth/token</code> → access, id_token
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell split">
+      <div class="section__head split__head">
+        <h2>Что уже работает</h2>
+        <p class="muted">Ничего не нужно докручивать перед первым входом: сервер, база и экраны идут вместе.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <h3>Пароли по-взрослому</h3>
+          <p>scrypt с солью, проверка слабых паролей, сброс по ссылке из письма и отзыв чужих сессий после смены.</p>
+        </article>
+        <article class="feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+          <h3>VK ID из коробки</h3>
+          <p>Вход через VK с PKCE, привязка профиля к существующему аккаунту и отвязка, когда она больше не нужна.</p>
+        </article>
+        <article class="feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/></svg>
+          <h3>Сессии на виду</h3>
+          <p>Человек видит все входы: браузер, систему, адрес и время. Любой можно завершить в один клик.</p>
+        </article>
+        <article class="feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/></svg>
+          <h3>Свои приложения</h3>
+          <p>client_id и секрет выдаются в кабинете. Redirect URI сверяются посимвольно, секрет можно перевыпустить.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="endpoints">
+    <div class="shell stack-lg">
+      <div class="section__head">
+        <h2>Эндпоинты</h2>
+        <p class="muted">Полный набор лежит по адресу <code>/.well-known/openid-configuration</code> — большинству библиотек достаточно его одного.</p>
+      </div>
+      <div class="grid-2" style="align-items:start">
+        <div class="panel">
+          <table class="endpoints">
+            <thead><tr><th>Адрес</th><th>Зачем</th></tr></thead>
+            <tbody>
+              <tr><td>GET /oauth/authorize</td><td>Начало входа, выдаёт код</td></tr>
+              <tr><td>POST /oauth/token</td><td>Обмен кода на токены, обновление</td></tr>
+              <tr><td>GET /oauth/userinfo</td><td>Профиль по access-токену</td></tr>
+              <tr><td>GET /oauth/jwks.json</td><td>Ключи для проверки id_token</td></tr>
+              <tr><td>POST /oauth/revoke</td><td>Отзыв выданного токена</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="code"><span class="c"># обмен кода на токены</span>
+<span class="k">curl</span> -s http://localhost:3000/oauth/token \
+  -d <span class="s">grant_type=authorization_code</span> \
+  -d <span class="s">code=$CODE</span> \
+  -d <span class="s">code_verifier=$VERIFIER</span> \
+  -d <span class="s">redirect_uri=http://localhost:4000/callback</span> \
+  -u <span class="s">"$CLIENT_ID:$CLIENT_SECRET"</span>
+
+<span class="c"># в ответе</span>
+{ <span class="s">"access_token"</span>: <span class="s">"…"</span>,
+  <span class="s">"id_token"</span>: <span class="s">"eyJhbGciOiJSUzI1NiIs…"</span>,
+  <span class="s">"expires_in"</span>: 3600 }</pre>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell spread">
+    <span>FlowID — провайдер входа на Node.js без внешних зависимостей</span>
+    <span class="row"><a href="/docs">Документация</a><a href="/login">Войти</a><a href="/register">Создать аккаунт</a></span>
+  </div>
+</footer>
+
+<script type="module">
+  import { api, $$ } from '/assets/js/core.js';
+
+  try {
+    const { user } = await api('/api/auth/me');
+    if (user) {
+      $$('[data-auth-hide]').forEach((node) => node.remove());
+      $$('[data-auth-show]').forEach((node) => { node.hidden = false; });
+    }
+  } catch { /* главная работает и без сервера сессий */ }
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Создание аккаунта — FlowID</title>
+<meta name="description" content="Создайте аккаунт FlowID по почте или через VK ID.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/flowid.css">
+<script>try{var t=localStorage.getItem('flowid-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+
+<div class="auth">
+  <aside class="auth__rail">
+    <a class="mark" href="/">
+      <svg class="mark__glyph" viewBox="15 18 131 147" fill="currentColor" aria-hidden="true"><path d="M139 23C142 26 140 34 136 40C131 48 123 53 113 55H59C51 56 46 60 44 66C43 71 44 78 46 86L22 103C20 103 19 102 19 99V67C19 53 25 42 34 34C42 26 50 23 59 22H136C137 22 138 22 139 23Z"/><path d="M119 76C122 79 120 86 116 94C112 101 106 105 97 109L67 116C56 119 49 125 47 134C45 144 40 153 33 157C27 161 21 160 19 157V120C19 111 23 105 31 100C41 94 57 87 74 82L114 74C116 74 118 75 119 76Z"/></svg>
+      FlowID
+    </a>
+
+    <div class="auth__rail-block">
+      <p class="auth__rail-title">Один аккаунт на все приложения</p>
+      <p class="auth__rail-text">Создайте его здесь — дальше входите в подключённые сервисы одним нажатием.</p>
+    </div>
+
+    <div class="rail auth__rail-block">
+      <div class="rail__step" data-state="active">
+        <div class="rail__node"></div>
+        <div class="rail__body">
+          <div class="rail__title">Заполните три поля</div>
+          <div class="rail__text">имя, почта, пароль</div>
+        </div>
+      </div>
+      <div class="rail__step" data-state="idle">
+        <div class="rail__node"></div>
+        <div class="rail__body">
+          <div class="rail__title">Подтвердите почту</div>
+          <div class="rail__text">письмо придёт сразу после создания</div>
+        </div>
+      </div>
+      <div class="rail__step" data-state="idle">
+        <div class="rail__node"></div>
+        <div class="rail__body">
+          <div class="rail__title">Готово</div>
+          <div class="rail__text">аккаунт работает во всех приложениях FlowID</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="auth__rail-foot">Пароль хранится только в виде scrypt-хеша. Восстановить его не может никто, включая нас.</p>
+  </aside>
+
+  <main class="auth__main">
+    <div class="auth__form enter">
+      <div class="auth__head">
+        <h1>Создать аккаунт</h1>
+        <p class="muted">Уже есть? <a href="/login" id="loginLink">Войдите</a></p>
+      </div>
+
+      <div class="note note--error" id="note" hidden><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><path d="M10 6v5m0 3h.01"/></svg><span></span></div>
+
+      <a class="btn btn--vk btn--block btn--lg" id="vkButton" href="/auth/vk/start" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 18c-5.3 0-8.6-3.7-8.7-9.8h2.7c.1 4.5 2.1 6.4 3.6 6.8V8.2h2.5v3.9c1.5-.2 3-1.9 3.6-3.9h2.5c-.4 2.5-2 4.2-3.2 4.9 1.2.6 3 2.1 3.7 4.9h-2.8c-.5-1.8-1.9-3.2-3.8-3.4V18h-.1Z"/></svg>
+        Продолжить с VK ID
+      </a>
+      <div class="divider" id="vkDivider" hidden>или по почте</div>
+
+      <form id="registerForm" novalidate>
+        <div class="stack">
+          <div class="field" data-field="name">
+            <label for="name">Как вас зовут</label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Анна Соколова" required autofocus>
+            <p class="field__error"></p>
+          </div>
+
+          <div class="field" data-field="email">
+            <label for="email">Почта</label>
+            <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" required>
+            <p class="field__hint">На неё придёт письмо для подтверждения.</p>
+            <p class="field__error"></p>
+          </div>
+
+          <div class="field" data-field="password">
+            <label for="password">Пароль</label>
+            <div class="input-wrap">
+              <input class="input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Минимум 8 символов" required>
+              <button class="peek" type="button" aria-label="Показать пароль">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 10S4.8 4.6 10 4.6 18.2 10 18.2 10 15.2 15.4 10 15.4 1.8 10 1.8 10Z"/><circle cx="10" cy="10" r="2.4"/></svg>
+              </button>
+            </div>
+            <div class="strength" id="strength" data-score="0">
+              <div class="strength__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <p class="strength__label"></p>
+            </div>
+            <p class="field__error"></p>
+          </div>
+
+          <label class="check" data-field="accept_terms">
+            <input type="checkbox" name="accept_terms" checked required>
+            <span>Соглашаюсь с правилами сервиса и обработкой персональных данных</span>
+          </label>
+
+          <button class="btn btn--lg btn--block" type="submit">Создать аккаунт</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script type="module">
+  import { api, $, onSubmit, wirePeek, wireStrength, nextParam } from '/assets/js/core.js';
+
+  wirePeek();
+  wireStrength($('#password'), $('#strength'));
+
+  const note = $('#note');
+  const next = nextParam();
+  if (next) $('#loginLink').href = `/login?next=${encodeURIComponent(next)}`;
+
+  const config = await api('/api/config').catch(() => ({}));
+  if (config.vk_enabled) {
+    $('#vkButton').hidden = false;
+    $('#vkDivider').hidden = false;
+    $('#vkButton').href = next ? `/auth/vk/start?next=${encodeURIComponent(next)}` : '/auth/vk/start';
+  }
+
+  onSubmit($('#registerForm'), async (values) => {
+    const result = await api('/api/auth/register', {
+      method: 'POST',
+      body: {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        accept_terms: values.accept_terms === 'on',
+        next,
+      },
+    });
+    location.href = result.next || '/account?welcome=1';
+  }, { note, busyLabel: 'Создаём…' });
+</script>
+</body>
+</html>
